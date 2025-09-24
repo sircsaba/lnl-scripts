@@ -181,7 +181,7 @@ fi
 # set to 2 for debug (verbose output) mode for every refresh
 : ${CUSTOMIZATION_DEBUG:="0"}
 
-: ${PATCH_BRANCH:="main"}
+: ${PATCH_BRANCH:="dev"}
 : ${PATCH_REPO:="https://github.com/sircsaba/customization.git"}
 
 REPO_NAME=$(basename "${PATCH_REPO}" .git)
