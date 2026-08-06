@@ -201,15 +201,15 @@ function erase_previous_line {
 #    keyword used in the automatic signing file
 #    e.g., ${DEV_TEAM_SETTING_NAME} = Apple Developer TeamID
 #    Loop and Loop associated apps use: "LOOP_DEVELOPMENT_TEAM"
-#    iAPS uses: "DEVELOPER_TEAM"
+#    Trio uses: "DEVELOPER_TEAM"
 
 # Default: some projects create or use the override file in the BUILD_DIR
-# Some, like iAPS, use a file in the downloaded clone itself
+# Some use a file in the downloaded clone itself
 #    in that case, set USE_OVERRIDE_IN_REPO to 1 in the src/Build script
 : ${USE_OVERRIDE_IN_REPO:="0"}
 
 # Default: some projects use submodules (and need --recurse-submodule)
-# Some, like iAPS and LoopFollow, do not use submodules
+# Some, like LoopFollow, do not use submodules
 #    in that case, set CLONE_SUB_MODULES to 0 in the src/Build script
 : ${CLONE_SUB_MODULES:="1"}
 
@@ -280,7 +280,7 @@ function before_final_return_message() {
     echo -e "${INFO_FONT}AFTER you hit return, Xcode will open automatically${NC}"
     echo "  For new phone or new watch (never used with Xcode),"
     echo "    review Developer Mode Information:"
-    echo -e "  https://loopkit.github.io/loopdocs/build/step14/#prepare-your-phone-and-watch"
+    echo -e "  https://loopkit.github.io/loopdocs/build/build-app/#prepare-your-phone-and-watch"
     echo ""
     echo "  For phones that have Developer Mode enabled continue with these steps"
     echo "  Upper middle of Xcode:"
@@ -370,17 +370,17 @@ CUSTOM_BRANCH=${1:-$CUSTOM_BRANCH}
 # *** Start of inlined file: inline_functions/building_verify_version.sh ***
 #This should be the latest iOS version
 #This is the highest version we expect users to have on their iPhones
-LATEST_IOS_VER="18.6.x"
+LATEST_IOS_VER="26.4.x"
 
 #This should be the lowest xcode version required to build to LATEST_IOS_VER
-LOWEST_XCODE_VER="16.1"
+LOWEST_XCODE_VER="16.4"
 
 #This should be the latest known xcode version
 #LOWEST_XCODE_VER and LATEST_XCODE_VER will probably be equal but we should have suport for a span of these
-LATEST_XCODE_VER="16.4"
+LATEST_XCODE_VER="26.4"
 
 #This is the lowest version of macOS required to run LOWEST_XCODE_VER
-LOWEST_MACOS_VER="14.6"
+LOWEST_MACOS_VER="15.3"
 
 # The compare_versions function takes two version strings as input arguments,
 # sorts them in ascending order using the sort command with the -V flag (version sorting),

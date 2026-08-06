@@ -204,15 +204,15 @@ function erase_previous_line {
 #    keyword used in the automatic signing file
 #    e.g., ${DEV_TEAM_SETTING_NAME} = Apple Developer TeamID
 #    Loop and Loop associated apps use: "LOOP_DEVELOPMENT_TEAM"
-#    iAPS uses: "DEVELOPER_TEAM"
+#    Trio uses: "DEVELOPER_TEAM"
 
 # Default: some projects create or use the override file in the BUILD_DIR
-# Some, like iAPS, use a file in the downloaded clone itself
+# Some use a file in the downloaded clone itself
 #    in that case, set USE_OVERRIDE_IN_REPO to 1 in the src/Build script
 : ${USE_OVERRIDE_IN_REPO:="0"}
 
 # Default: some projects use submodules (and need --recurse-submodule)
-# Some, like iAPS and LoopFollow, do not use submodules
+# Some, like LoopFollow, do not use submodules
 #    in that case, set CLONE_SUB_MODULES to 0 in the src/Build script
 : ${CLONE_SUB_MODULES:="1"}
 
@@ -283,7 +283,7 @@ function before_final_return_message() {
     echo -e "${INFO_FONT}AFTER you hit return, Xcode will open automatically${NC}"
     echo "  For new phone or new watch (never used with Xcode),"
     echo "    review Developer Mode Information:"
-    echo -e "  https://loopkit.github.io/loopdocs/build/step14/#prepare-your-phone-and-watch"
+    echo -e "  https://loopkit.github.io/loopdocs/build/build-app/#prepare-your-phone-and-watch"
     echo ""
     echo "  For phones that have Developer Mode enabled continue with these steps"
     echo "  Upper middle of Xcode:"
@@ -373,17 +373,17 @@ CUSTOM_BRANCH=${1:-$CUSTOM_BRANCH}
 # *** Start of inlined file: inline_functions/building_verify_version.sh ***
 #This should be the latest iOS version
 #This is the highest version we expect users to have on their iPhones
-LATEST_IOS_VER="18.6.x"
+LATEST_IOS_VER="26.4.x"
 
 #This should be the lowest xcode version required to build to LATEST_IOS_VER
-LOWEST_XCODE_VER="16.1"
+LOWEST_XCODE_VER="16.4"
 
 #This should be the latest known xcode version
 #LOWEST_XCODE_VER and LATEST_XCODE_VER will probably be equal but we should have suport for a span of these
-LATEST_XCODE_VER="16.4"
+LATEST_XCODE_VER="26.4"
 
 #This is the lowest version of macOS required to run LOWEST_XCODE_VER
-LOWEST_MACOS_VER="14.6"
+LOWEST_MACOS_VER="15.3"
 
 # The compare_versions function takes two version strings as input arguments,
 # sorts them in ascending order using the sort command with the -V flag (version sorting),
@@ -807,14 +807,9 @@ open_source_warning
 
 # when public:
 URL_THIS_SCRIPT="https://github.com/nightscout/Trio.git"
-# use next while in beta testing - takes user to Beta-Testing-Welcome
-# URL_FOR_DISCORD=https://discord.gg/kyjG4333Wb
-# after release, use the following - takes user to the rules channels
-URL_FOR_DISCORD="discord.gg/FnwFEFUwXE"
-URL_FOR_FACEBOOK="facebook.com/groups/diytrio"
-URL_FOR_WEBSITE="diy-trio.org"
+URL_FOR_DISCORD="discord.triodocs.org"
+URL_FOR_FACEBOOK="facebook.triodocs.org"
 URL_FOR_DOCS="triodocs.org"
-URL_FOR_DOCS_PR="github.com/nightscout/trio-docs"
 
 # Keep this for when we need a special branch name
 # If not used, make this empty string and comment out the menu option
@@ -833,6 +828,26 @@ function select_special_branch() {
     branch_select ${URL_THIS_SCRIPT} ${special_branch_name} ${app_name}_${special_branch_name}
 }
 
+function special_message_0.2_to_0.7() {
+    echo -e ""
+    echo -e "For those who were running versions of Trio starting with 0.2,"
+    echo -e "  when you build main, you will advance to version 0.7:"
+    echo -e "  As part of this, you will go through an onboarding step"
+    echo -e "      ${INFO_FONT} STOP NOW${NC}"
+    echo -e "Read this information first, then come back and build"
+    echo -e "  https://triodocs.org/configuration/migration/trio-02x-migration/"
+}
+
+function special_message_howto_build_feature_branch() {
+    echo -e ""
+    echo -e "For those who want to build a special feature branch, you must use"
+    echo -e "  the BuildTrio script and indicate the desired branch."
+    echo -e "${INFO_FONT}Make sure you join Discord; and before you build, "
+    echo -e "   read about the new pump or cgm being tested in that feature branch${NC}"
+    echo -e "Read this section of LoopDocs and just use BuildTrio instead of BuildLoop."
+    echo -e "  https://loopkit.github.io/loopdocs/build/build-dev-mac/#build-other-branches"
+}
+
 if [ -z "$CUSTOM_BRANCH" ]; then
     while [ -z "$BRANCH" ]; do
         section_separator
@@ -841,10 +856,12 @@ if [ -z "$CUSTOM_BRANCH" ]; then
         echo -e "  ${INFO_FONT}Welcome: You can get help for ${app_name} at:${NC}"
         echo -e "       Facebook      : ${URL_FOR_FACEBOOK}"
         echo -e "       Discord       : ${URL_FOR_DISCORD}"
-        echo -e "       Website       : ${URL_FOR_WEBSITE}"
         echo -e "       Documentation : ${URL_FOR_DOCS}"
         echo -e ""
         echo -e "  ${INFO_FONT}Option 1: Trio main is recommended${NC}"
+        echo -e "  ${INFO_FONT}Join Discord before using dev or building a feature branch${NC}"
+        special_message_0.2_to_0.7
+        special_message_howto_build_feature_branch
         echo -e ""
         echo -e "Before you continue, please ensure"
         echo -e "  you have Xcode and Xcode command line tools installed\n"

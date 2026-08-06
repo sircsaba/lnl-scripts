@@ -37,14 +37,9 @@ open_source_warning
 
 # when public:
 URL_THIS_SCRIPT="https://github.com/nightscout/Trio.git"
-# use next while in beta testing - takes user to Beta-Testing-Welcome
-# URL_FOR_DISCORD=https://discord.gg/kyjG4333Wb
-# after release, use the following - takes user to the rules channels
-URL_FOR_DISCORD="discord.gg/FnwFEFUwXE"
-URL_FOR_FACEBOOK="facebook.com/groups/diytrio"
-URL_FOR_WEBSITE="diy-trio.org"
+URL_FOR_DISCORD="discord.triodocs.org"
+URL_FOR_FACEBOOK="facebook.triodocs.org"
 URL_FOR_DOCS="triodocs.org"
-URL_FOR_DOCS_PR="github.com/nightscout/trio-docs"
 
 # Keep this for when we need a special branch name
 # If not used, make this empty string and comment out the menu option
@@ -63,6 +58,26 @@ function select_special_branch() {
     branch_select ${URL_THIS_SCRIPT} ${special_branch_name} ${app_name}_${special_branch_name}
 }
 
+function special_message_0.2_to_0.7() {
+    echo -e ""
+    echo -e "For those who were running versions of Trio starting with 0.2,"
+    echo -e "  when you build main, you will advance to version 0.7:"
+    echo -e "  As part of this, you will go through an onboarding step"
+    echo -e "      ${INFO_FONT} STOP NOW${NC}"
+    echo -e "Read this information first, then come back and build"
+    echo -e "  https://triodocs.org/configuration/migration/trio-02x-migration/"
+}
+
+function special_message_howto_build_feature_branch() {
+    echo -e ""
+    echo -e "For those who want to build a special feature branch, you must use"
+    echo -e "  the BuildTrio script and indicate the desired branch."
+    echo -e "${INFO_FONT}Make sure you join Discord; and before you build, "
+    echo -e "   read about the new pump or cgm being tested in that feature branch${NC}"
+    echo -e "Read this section of LoopDocs and just use BuildTrio instead of BuildLoop."
+    echo -e "  https://loopkit.github.io/loopdocs/build/build-dev-mac/#build-other-branches"
+}
+
 if [ -z "$CUSTOM_BRANCH" ]; then
     while [ -z "$BRANCH" ]; do
         section_separator
@@ -71,10 +86,12 @@ if [ -z "$CUSTOM_BRANCH" ]; then
         echo -e "  ${INFO_FONT}Welcome: You can get help for ${app_name} at:${NC}"
         echo -e "       Facebook      : ${URL_FOR_FACEBOOK}"
         echo -e "       Discord       : ${URL_FOR_DISCORD}"
-        echo -e "       Website       : ${URL_FOR_WEBSITE}"
         echo -e "       Documentation : ${URL_FOR_DOCS}"
         echo -e ""
         echo -e "  ${INFO_FONT}Option 1: Trio main is recommended${NC}"
+        echo -e "  ${INFO_FONT}Join Discord before using dev or building a feature branch${NC}"
+        special_message_0.2_to_0.7
+        special_message_howto_build_feature_branch
         echo -e ""
         echo -e "Before you continue, please ensure"
         echo -e "  you have Xcode and Xcode command line tools installed\n"
